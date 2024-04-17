@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  next-app:
+    container_name: next-app
+    build:
+      context: ./front
+      dockerfile: ./docker/Dockerfile
+    volumes:
+      - ./front:/app
+    restart: always
+    ports:
+      - 3000:3000
