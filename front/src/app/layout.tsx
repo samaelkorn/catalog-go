@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="ru">
       <body className={inter.className}>
         <Header />
-        <main className="min-h-screen container mx-auto">
+        <main className="min-h-screen">
           {children}
         </main>
         <Footer />
