@@ -74,5 +74,9 @@ func run(logger *slog.Logger) error {
 		logger: logger,
 	}
 
+	if cfg.db.automigrate {
+		app.seeder()
+	}
+
 	return app.serveHTTP()
 }

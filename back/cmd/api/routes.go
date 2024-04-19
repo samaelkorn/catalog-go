@@ -16,9 +16,16 @@ func (app *application) routes() http.Handler {
 	mux.Use(app.recoverPanic)
 	mux.Use(app.authenticate)
 
-	mux.HandleFunc("/status", app.status, "GET")
+	//ref
+	mux.HandleFunc("/colors", app.colorList, "GET")
+	mux.HandleFunc("/statuses", app.statusList, "GET")
+	//product
+	mux.HandleFunc("/products", app.productList, "GET")
+	//users
 	mux.HandleFunc("/users", app.createUser, "POST")
 	mux.HandleFunc("/authentication-tokens", app.createAuthenticationToken, "POST")
+	//fileserver
+	mux.Handle("/storage/...", http.StripPrefix("/storage/", http.FileServer(http.Dir("./storage"))))
 
 	mux.Group(func(mux *flow.Mux) {
 		mux.Use(app.requireAuthenticatedUser)

@@ -29,3 +29,18 @@ func (db *DB) InsertProduct(name string) (int, error) {
 
 	return int(id), err
 }
+func (db *DB) GetProducts() ([]Product, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), defaultTimeout)
+	defer cancel()
+	produsts := []Product{}
+
+	query := `SELECT * FROM products`
+
+	err := db.SelectContext(ctx, &produsts, query)
+
+	if err != nil {
+		return produsts, nil
+	}
+
+	return produsts, err
+}

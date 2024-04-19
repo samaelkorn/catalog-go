@@ -8,10 +8,10 @@ import (
 )
 
 type User struct {
-	ID             int       `db:"id"`
-	Created        time.Time `db:"created"`
-	Email          string    `db:"email"`
-	HashedPassword string    `db:"hashed_password"`
+	ID             int       `db:"id" json:"id"`
+	Created        time.Time `db:"created" json:"created"`
+	Email          string    `db:"email" json:"email"`
+	HashedPassword string    `db:"hashed_password" json:"hashed_password"`
 }
 
 func (db *DB) InsertUser(email, hashedPassword string) (int, error) {

@@ -8,6 +8,14 @@ services:
       dockerfile: ./docker/Dockerfile
     volumes:
       - ./front:/app
-    restart: always
     ports:
       - 3000:3000
+  go-app:
+    container_name: go-app
+    build:
+      context: ./back
+      dockerfile: ./docker/Dockerfile
+    volumes:
+      - ./back:/app
+    ports:
+      - 4444:4444

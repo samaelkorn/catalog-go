@@ -3,9 +3,9 @@ package database
 import "context"
 
 type Status struct {
-	id   int    `db:"id"`
-	name string `db:"name"`
-	code string `db:"code"`
+	Id   int    `db:"id" json:"id"`
+	Name string `db:"name" json:"name"`
+	Code string `db:"code" json:"code"`
 }
 
 func (db *DB) InsertStatus(name, code string) (int, error) {
@@ -27,4 +27,20 @@ func (db *DB) InsertStatus(name, code string) (int, error) {
 	}
 
 	return int(id), err
+}
+
+func (db *DB) GetStatuses() ([]Status, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), defaultTimeout)
+	defer cancel()
+	list := []Status{}
+
+	query := `SELECT * FROM statuses`
+
+	err := db.SelectContext(ctx, &list, query)
+
+	if err != nil {
+		return list, nil
+	}
+
+	return list, err
 }
