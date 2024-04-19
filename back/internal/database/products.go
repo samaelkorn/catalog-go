@@ -5,19 +5,23 @@ import (
 )
 
 type Product struct {
-	ID   int    `db:"id"`
-	Name string `db:"name"`
+	ID       int    `db:"id" json:"id"`
+	Name     string `db:"name" json:"name"`
+	Image    string `db:"image" json:"image"`
+	Price    string `db:"price" json:"price"`
+	ColorId  string `db:"color_id" json:"color_id"`
+	StatusId string `db:"status_id" json:"status_id"`
 }
 
-func (db *DB) InsertProduct(name string) (int, error) {
+func (db *DB) InsertProduct(name, image string, price, color_id, status_id int) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), defaultTimeout)
 	defer cancel()
 
 	query := `
-		INSERT INTO products (name)
-		VALUES ($1)`
+		INSERT INTO products (name, image, price, color_id, status_id)
+		VALUES ($1, $2, $3, $4, $5)`
 
-	result, err := db.ExecContext(ctx, query, name)
+	result, err := db.ExecContext(ctx, query, name, image, price, color_id, status_id)
 	if err != nil {
 		return 0, err
 	}
@@ -32,15 +36,15 @@ func (db *DB) InsertProduct(name string) (int, error) {
 func (db *DB) GetProducts() ([]Product, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), defaultTimeout)
 	defer cancel()
-	produsts := []Product{}
+	list := []Product{}
 
 	query := `SELECT * FROM products`
 
-	err := db.SelectContext(ctx, &produsts, query)
+	err := db.SelectContext(ctx, &list, query)
 
 	if err != nil {
-		return produsts, nil
+		return list, nil
 	}
 
-	return produsts, err
+	return list, err
 }

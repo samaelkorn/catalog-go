@@ -1,6 +1,7 @@
 CREATE TABLE products (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
+    image TEXT NOT NULL,
     price INTEGER NOT NULL,
     color_id INTEGER NOT NULL,
     status_id INTEGER NOT NULL,
