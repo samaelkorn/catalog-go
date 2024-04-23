@@ -1,0 +1,1 @@
+export const urlApi = (...arg: string[]): string => `${process.env.DATA_API_URL!}/${arg.join('/')}`

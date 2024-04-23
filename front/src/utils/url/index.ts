@@ -1,0 +1,1 @@
+export { urlApi } from './urlApi'

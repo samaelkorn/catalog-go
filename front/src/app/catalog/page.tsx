@@ -1,6 +1,7 @@
 import Filter from './Filter'
 import Sort from './Sort'
 import Catalog from './Catalog'
+
 export default function CatalogPage() {
     return (
         <div>

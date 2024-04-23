@@ -9,8 +9,10 @@ type Product struct {
 	Name     string `db:"name" json:"name"`
 	Image    string `db:"image" json:"image"`
 	Price    string `db:"price" json:"price"`
-	ColorId  string `db:"color_id" json:"color_id"`
-	StatusId string `db:"status_id" json:"status_id"`
+	ColorId  int    `db:"color_id" json:"color_id"`
+	StatusId int    `db:"status_id" json:"status_id"`
+	Color    Color  `json:"color"`
+	Status   Status `json:"status"`
 }
 
 func (db *DB) InsertProduct(name, image string, price, color_id, status_id int) (int, error) {
@@ -38,7 +40,13 @@ func (db *DB) GetProducts() ([]Product, error) {
 	defer cancel()
 	list := []Product{}
 
-	query := `SELECT * FROM products`
+	query := `SELECT p.*, c.id "color.id", c.name "color.name", c.code "color.code", 
+		s.id "status.id", s.name "status.name", s.code "status.code"
+		FROM products p
+		INNER JOIN colors c ON p.color_id = c.id
+		INNER JOIN statuses s ON p.status_id = s.id
+		LIMIT 20
+	`
 
 	err := db.SelectContext(ctx, &list, query)
 
