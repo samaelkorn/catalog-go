@@ -26,9 +26,10 @@ func main() {
 }
 
 type config struct {
-	baseURL  string
-	httpPort int
-	db       struct {
+	baseURL       string
+	httpPort      int
+	nameContainer string
+	db            struct {
 		dsn         string
 		automigrate bool
 	}
@@ -52,6 +53,7 @@ func run(logger *slog.Logger) error {
 	flag.StringVar(&cfg.db.dsn, "db-dsn", "db.sqlite", "sqlite3 DSN")
 	flag.BoolVar(&cfg.db.automigrate, "db-automigrate", true, "run migrations on startup")
 	flag.StringVar(&cfg.jwt.secretKey, "jwt-secret-key", "oagltjmmlhjorofboarnybvcexpv23z7", "secret key for JWT authentication")
+	flag.StringVar(&cfg.nameContainer, "nameContainer", "http://go-app:4444", "name's docker container")
 
 	showVersion := flag.Bool("version", false, "display version and exit")
 

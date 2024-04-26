@@ -1,6 +1,6 @@
 import { urlApi } from '@/utils/url'
 export async function GET() {
-  const res = await fetch(urlApi('products'), {
+  const res = await fetch(urlApi('colors'), {
     headers: {
       'Content-Type': 'application/json'
     },

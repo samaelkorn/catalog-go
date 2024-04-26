@@ -1,8 +1,13 @@
 import Filter from './Filter'
 import Sort from './Sort'
 import Catalog from './Catalog'
+import { getProducts, getColors, getStatuses } from '@/api'
 
-export default function CatalogPage() {
+export default async function CatalogPage() {
+    const { data }: { data: TProduct[] } = await getProducts()
+    const { data: colors }: { data: TColor[] } = await getColors()
+    const { data: statuses }: { data: TStatus[] } = await getStatuses()
+
     return (
         <div>
             <div className="container mx-auto">
@@ -14,14 +19,14 @@ export default function CatalogPage() {
             </div>
             <div className="bg-slate-100 py-8">
                 <div className="container mx-auto">
-                    <Filter />
+                    <Filter colors={colors} statuses={statuses} />
                 </div>
             </div>
             <div className="container mx-auto">
                 <Sort />
             </div>
             <div className="container mx-auto">
-                <Catalog />
+                <Catalog data={data} />
             </div>
         </div>
     )

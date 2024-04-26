@@ -42,9 +42,10 @@ func (app *application) seederColors() {
 	}
 }
 func (app *application) seederProduct() {
+	urlCont := app.config.nameContainer
 	array := []ProductSeed{
-		{Name: "Yamaha R1", Image: app.config.baseURL + "/storage/img/yamaha.jpg", Price: 5000, ColorId: 2, StatusId: 2},
-		{Name: "BMW S1000RR", Image: app.config.baseURL + "/storage/img/bmw.jpg", Price: 6000, ColorId: 4, StatusId: 1},
+		{Name: "Yamaha R1", Image: urlCont + "/storage/img/yamaha.jpg", Price: 5000, ColorId: 2, StatusId: 2},
+		{Name: "BMW S1000RR", Image: urlCont + "/storage/img/bmw.jpg", Price: 6000, ColorId: 4, StatusId: 1},
 	}
 
 	for _, item := range array {

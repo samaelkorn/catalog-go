@@ -5,6 +5,7 @@ export default function Sort() {
                 <select name="sort" className="bg-slate-100" defaultValue="">
                     <option value="">Сортировка по</option>
                     <option value="price">По цене</option>
+                    <option value="name">По названию</option>
                 </select>
             </div>
         </div>
