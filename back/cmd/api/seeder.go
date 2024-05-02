@@ -55,6 +55,7 @@ func (app *application) seederProduct() {
 
 func (app *application) seeder() {
 	list, err := app.db.GetColors()
+
 	if err == nil && len(list) == 0 {
 		app.seederStatus()
 		app.seederColors()

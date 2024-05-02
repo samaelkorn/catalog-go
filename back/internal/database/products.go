@@ -45,6 +45,7 @@ func (db *DB) GetProducts() ([]Product, error) {
 		FROM products p
 		INNER JOIN colors c ON p.color_id = c.id
 		INNER JOIN statuses s ON p.status_id = s.id
+		WHERE c.id = 2
 		LIMIT 20
 	`
 
