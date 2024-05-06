@@ -39,15 +39,16 @@ func (db *DB) GetProducts() ([]Product, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), defaultTimeout)
 	defer cancel()
 	list := []Product{}
+	builder := Builder()
+	selectField := `p.*, c.id "color.id", c.name "color.name", c.code "color.code",
+	 s.id "status.id", s.name "status.name", s.code "status.code"`
 
-	query := `SELECT p.*, c.id "color.id", c.name "color.name", c.code "color.code", 
-		s.id "status.id", s.name "status.name", s.code "status.code"
-		FROM products p
-		INNER JOIN colors c ON p.color_id = c.id
-		INNER JOIN statuses s ON p.status_id = s.id
-		WHERE c.id = 2
-		LIMIT 20
-	`
+	query := builder.Select(selectField).
+		From("products p").
+		Join("colors c ON p.color_id = c.id").
+		Join("statuses s ON p.status_id = s.id").
+		Limit("20").
+		ToSql()
 
 	err := db.SelectContext(ctx, &list, query)
 

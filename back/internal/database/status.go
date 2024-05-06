@@ -33,8 +33,9 @@ func (db *DB) GetStatuses() ([]Status, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), defaultTimeout)
 	defer cancel()
 	list := []Status{}
+	builder := Builder()
 
-	query := `SELECT * FROM statuses`
+	query := builder.Select("*").From("statuses").ToSql()
 
 	err := db.SelectContext(ctx, &list, query)
 
