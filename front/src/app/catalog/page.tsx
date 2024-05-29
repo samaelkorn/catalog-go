@@ -3,7 +3,7 @@ import Sort from './Sort'
 import Catalog from './Catalog'
 import { getProducts, getColors, getStatuses } from '@/api'
 
-export default async function CatalogPage(request: {searchParams: {color: string, status: string}}) {
+export default async function CatalogPage(request: { searchParams: { color: string, status: string } }) {
     const searchParams = new URLSearchParams(request.searchParams)
     const { data }: { data: TProduct[] } = await getProducts(searchParams)
     const { data: colors }: { data: TColor[] } = await getColors()
@@ -27,7 +27,7 @@ export default async function CatalogPage(request: {searchParams: {color: string
                 <Sort />
             </div>
             <div className="container mx-auto">
-                <Catalog data={data} />
+                <Catalog data={data} search={searchParams.toString()} />
             </div>
         </div>
     )

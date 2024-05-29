@@ -7,17 +7,21 @@ import { getProducts } from '@/api'
 
 interface TP {
     data: TProduct[]
+    search: string
 }
 
-export default function Catalog({ data }: TP) {
-    const [list, setList] = useState<TProduct[]>(data)
+export default function Catalog({ data, search }: TP) {
     const searchParams = useSearchParams()
+    const [list, setList] = useState<TProduct[]>(data)
+    const [stateSearch, setStateSearch] = useState(search)
+
     useEffect(() => {
-        if (searchParams.size > 0) {
+        if (stateSearch !== searchParams.toString()) {
+            setStateSearch(searchParams.toString())
             getProducts(searchParams)
                 .then(({ data }) => setList(data))
         }
-    }, [searchParams])
+    }, [stateSearch, searchParams])
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-5">
