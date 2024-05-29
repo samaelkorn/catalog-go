@@ -20,8 +20,12 @@ func (b *BuilderValue) From(name string) *BuilderValue {
 
 	return b
 }
-func (b *BuilderValue) Where(state string) *BuilderValue {
-	b.value += strings.Join([]string{"WHERE", state}, " ") + "\n"
+func (b *BuilderValue) Where(state []string, operation string) *BuilderValue {
+	if len(state) < 1 {
+		return b
+	}
+
+	b.value += strings.Join([]string{"WHERE", strings.Join(state, " "+operation+" ")}, " ") + "\n"
 
 	return b
 }

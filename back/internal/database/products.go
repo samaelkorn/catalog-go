@@ -35,18 +35,28 @@ func (db *DB) InsertProduct(name, image string, price, color_id, status_id int) 
 
 	return int(id), err
 }
-func (db *DB) GetProducts() ([]Product, error) {
+func (db *DB) GetProducts(color, status string) ([]Product, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), defaultTimeout)
 	defer cancel()
 	list := []Product{}
 	builder := Builder()
 	selectField := `p.*, c.id "color.id", c.name "color.name", c.code "color.code",
 	 s.id "status.id", s.name "status.name", s.code "status.code"`
+	where := []string{}
+
+	if len(color) > 0 {
+		where = append(where, "c.id = "+color)
+	}
+
+	if len(status) > 0 {
+		where = append(where, "s.id = "+status)
+	}
 
 	query := builder.Select(selectField).
 		From("products p").
 		Join("colors c ON p.color_id = c.id").
 		Join("statuses s ON p.status_id = s.id").
+		Where(where, "AND").
 		Limit("20").
 		ToSql()
 
