@@ -25,16 +25,16 @@ export default function Filter({ statuses, colors }: TP) {
         <div className="shadow-lg rounded-[10px] py-10 px-5 bg-white">
             <div className="flex">
                 <div className="mr-2">
-                    <select defaultValue="" className="border border-stone-400 text-sm rounded-[7px] p-2.5 pr-4" onChange={({ target }) => router.push(pathname + '?' + createQueryString('color', target.value))}>
-                        <option selected value="">Выберите цвет</option>
+                    <select defaultValue={searchParams.get('color') ?? ''} className="border border-stone-400 text-sm rounded-[7px] p-2.5 pr-4" onChange={({ target }) => router.push(pathname + '?' + createQueryString('color', target.value))}>
+                        <option value="">Выберите цвет</option>
                         {colors.map(item =>
                             <option key={item.id} value={item.id}>{item.name}</option>
                         )}
                     </select>
                 </div>
                 <div>
-                    <select defaultValue="" className="border border-stone-400 text-sm rounded-[7px] p-2.5 pr-4" onChange={({ target }) => router.push(pathname + '?' + createQueryString('status', target.value))}>
-                        <option selected value="">Выберите статус</option>
+                    <select defaultValue={searchParams.get('color') ?? ''} className="border border-stone-400 text-sm rounded-[7px] p-2.5 pr-4" onChange={({ target }) => router.push(pathname + '?' + createQueryString('status', target.value))}>
+                        <option value="">Выберите статус</option>
                         {statuses.map(item =>
                             <option key={item.id} value={item.id}>{item.name}</option>
                         )}
