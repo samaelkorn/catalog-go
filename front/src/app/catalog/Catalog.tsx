@@ -1,7 +1,9 @@
 'use client'
-import {useState} from 'react'
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
+import { getProducts } from '@/api'
 
 interface TP {
     data: TProduct[]
@@ -9,6 +11,14 @@ interface TP {
 
 export default function Catalog({ data }: TP) {
     const [list, setList] = useState<TProduct[]>(data)
+    const searchParams = useSearchParams()
+    useEffect(() => {
+        if (searchParams.size > 0) {
+            getProducts(searchParams)
+                .then(({ data }) => setList(data))
+        }
+    }, [searchParams])
+
     return (
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-5">
             {list.map((item) =>

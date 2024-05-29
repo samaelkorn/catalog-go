@@ -3,8 +3,9 @@ import Sort from './Sort'
 import Catalog from './Catalog'
 import { getProducts, getColors, getStatuses } from '@/api'
 
-export default async function CatalogPage() {
-    const { data }: { data: TProduct[] } = await getProducts()
+export default async function CatalogPage(request: {searchParams: {color: string, status: string}}) {
+    const searchParams = new URLSearchParams(request.searchParams)
+    const { data }: { data: TProduct[] } = await getProducts(searchParams)
     const { data: colors }: { data: TColor[] } = await getColors()
     const { data: statuses }: { data: TStatus[] } = await getStatuses()
 
